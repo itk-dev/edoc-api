@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="loop">
+  <description>PHP CodeSniffer configuration</description>
+
+  <file>src/</file>
+
+  <!-- Show progress -->
+  <arg value="p"/>
+
+  <rule ref="PSR2"/>
+</ruleset>

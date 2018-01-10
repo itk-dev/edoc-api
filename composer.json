@@ -1,0 +1,17 @@
+{
+    "name": "itk-dev/edoc",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mikkel Ricky",
+            "email": "rimi@aarhus.dk"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-0": {
+            "ItkDev\\": "src/"
+        }
+    }
+}
