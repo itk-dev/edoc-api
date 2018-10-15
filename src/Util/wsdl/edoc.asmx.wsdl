@@ -1,0 +1,1153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="GetSystemInfo">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetSystemInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetSystemInfoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchDocument">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="XmlDocument" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchDocumentResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SearchDocumentResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDocumentList">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="XmlDocument" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDocumentListResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDocumentListResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetWorkReport">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="XmlDocument" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetWorkReportResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetWorkReportResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDocumentAttachmentList">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="XmlDocument" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDocumentAttachmentListResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDocumentAttachmentListResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateDocumentAndDocumentVersion">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="XmlDocument" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateDocumentAndDocumentVersionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CreateDocumentAndDocumentVersionResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateDocument">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="XmlDocument" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateDocumentResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UpdateDocumentResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateDocumentVersion">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="XmlDocument" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateDocumentVersionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CreateDocumentVersionResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDocumentVersion">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="XmlDocument" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDocumentVersionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDocumentVersionResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CheckoutDocumentVersion">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="XmlDocument" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CheckoutDocumentVersionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CheckoutDocumentVersionResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CheckinDocumentVersion">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="XmlDocument" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CheckinDocumentVersionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CheckinDocumentVersionResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UndoCheckoutDocumentVersion">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="XmlDocument" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UndoCheckoutDocumentVersionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UndoCheckoutDocumentVersionResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateCaseFile">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="XmlDocument" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateCaseFileResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CreateCaseFileResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateCaseFile">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="XmlDocument" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateCaseFileResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UpdateCaseFileResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FileDocument">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="XmlDocument" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FileDocumentResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FileDocumentResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchCaseFile">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="XmlDocument" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchCaseFileResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SearchCaseFileResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchNewCaseFilesAndCaseFilesWithNewDocuments">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="XmlDocument" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchNewCaseFilesAndCaseFilesWithNewDocumentsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SearchNewCaseFilesAndCaseFilesWithNewDocumentsResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddCaseFileParticipants">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="XmlDocument" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddCaseFileParticipantsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AddCaseFileParticipantsResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCaseFileAdditionalCaseWorkers">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="XmlDocument" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCaseFileAdditionalCaseWorkersResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCaseFileAdditionalCaseWorkersResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddCaseFileAdditionalCaseWorkers">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="XmlDocument" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddCaseFileAdditionalCaseWorkersResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AddCaseFileAdditionalCaseWorkersResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RemoveCaseFileAdditionalCaseWorkers">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="XmlDocument" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RemoveCaseFileAdditionalCaseWorkersResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="RemoveCaseFileAdditionalCaseWorkersResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddCasePermision">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="XmlDocument" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddCasePermisionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AddCasePermisionResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RemoveCasePermision">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="XmlDocument" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RemoveCasePermisionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="RemoveCasePermisionResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="eDocServiceForGIS">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="XmlDocument" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="eDocServiceForGISResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="eDocServiceForGISResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DisplayOnGIS">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="XmlDocument" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DisplayOnGISResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DisplayOnGISResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetItemList">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="XmlDocument" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetItemListResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetItemListResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchContact">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="XmlDocument" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchContactResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SearchContactResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetSystemInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetSystemInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetSystemInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetSystemInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="SearchDocumentSoapIn">
+    <wsdl:part name="parameters" element="tns:SearchDocument" />
+  </wsdl:message>
+  <wsdl:message name="SearchDocumentSoapOut">
+    <wsdl:part name="parameters" element="tns:SearchDocumentResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDocumentListSoapIn">
+    <wsdl:part name="parameters" element="tns:GetDocumentList" />
+  </wsdl:message>
+  <wsdl:message name="GetDocumentListSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDocumentListResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetWorkReportSoapIn">
+    <wsdl:part name="parameters" element="tns:GetWorkReport" />
+  </wsdl:message>
+  <wsdl:message name="GetWorkReportSoapOut">
+    <wsdl:part name="parameters" element="tns:GetWorkReportResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDocumentAttachmentListSoapIn">
+    <wsdl:part name="parameters" element="tns:GetDocumentAttachmentList" />
+  </wsdl:message>
+  <wsdl:message name="GetDocumentAttachmentListSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDocumentAttachmentListResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateDocumentAndDocumentVersionSoapIn">
+    <wsdl:part name="parameters" element="tns:CreateDocumentAndDocumentVersion" />
+  </wsdl:message>
+  <wsdl:message name="CreateDocumentAndDocumentVersionSoapOut">
+    <wsdl:part name="parameters" element="tns:CreateDocumentAndDocumentVersionResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateDocumentSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateDocument" />
+  </wsdl:message>
+  <wsdl:message name="UpdateDocumentSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateDocumentResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateDocumentVersionSoapIn">
+    <wsdl:part name="parameters" element="tns:CreateDocumentVersion" />
+  </wsdl:message>
+  <wsdl:message name="CreateDocumentVersionSoapOut">
+    <wsdl:part name="parameters" element="tns:CreateDocumentVersionResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDocumentVersionSoapIn">
+    <wsdl:part name="parameters" element="tns:GetDocumentVersion" />
+  </wsdl:message>
+  <wsdl:message name="GetDocumentVersionSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDocumentVersionResponse" />
+  </wsdl:message>
+  <wsdl:message name="CheckoutDocumentVersionSoapIn">
+    <wsdl:part name="parameters" element="tns:CheckoutDocumentVersion" />
+  </wsdl:message>
+  <wsdl:message name="CheckoutDocumentVersionSoapOut">
+    <wsdl:part name="parameters" element="tns:CheckoutDocumentVersionResponse" />
+  </wsdl:message>
+  <wsdl:message name="CheckinDocumentVersionSoapIn">
+    <wsdl:part name="parameters" element="tns:CheckinDocumentVersion" />
+  </wsdl:message>
+  <wsdl:message name="CheckinDocumentVersionSoapOut">
+    <wsdl:part name="parameters" element="tns:CheckinDocumentVersionResponse" />
+  </wsdl:message>
+  <wsdl:message name="UndoCheckoutDocumentVersionSoapIn">
+    <wsdl:part name="parameters" element="tns:UndoCheckoutDocumentVersion" />
+  </wsdl:message>
+  <wsdl:message name="UndoCheckoutDocumentVersionSoapOut">
+    <wsdl:part name="parameters" element="tns:UndoCheckoutDocumentVersionResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateCaseFileSoapIn">
+    <wsdl:part name="parameters" element="tns:CreateCaseFile" />
+  </wsdl:message>
+  <wsdl:message name="CreateCaseFileSoapOut">
+    <wsdl:part name="parameters" element="tns:CreateCaseFileResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateCaseFileSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateCaseFile" />
+  </wsdl:message>
+  <wsdl:message name="UpdateCaseFileSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateCaseFileResponse" />
+  </wsdl:message>
+  <wsdl:message name="FileDocumentSoapIn">
+    <wsdl:part name="parameters" element="tns:FileDocument" />
+  </wsdl:message>
+  <wsdl:message name="FileDocumentSoapOut">
+    <wsdl:part name="parameters" element="tns:FileDocumentResponse" />
+  </wsdl:message>
+  <wsdl:message name="SearchCaseFileSoapIn">
+    <wsdl:part name="parameters" element="tns:SearchCaseFile" />
+  </wsdl:message>
+  <wsdl:message name="SearchCaseFileSoapOut">
+    <wsdl:part name="parameters" element="tns:SearchCaseFileResponse" />
+  </wsdl:message>
+  <wsdl:message name="SearchNewCaseFilesAndCaseFilesWithNewDocumentsSoapIn">
+    <wsdl:part name="parameters" element="tns:SearchNewCaseFilesAndCaseFilesWithNewDocuments" />
+  </wsdl:message>
+  <wsdl:message name="SearchNewCaseFilesAndCaseFilesWithNewDocumentsSoapOut">
+    <wsdl:part name="parameters" element="tns:SearchNewCaseFilesAndCaseFilesWithNewDocumentsResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddCaseFileParticipantsSoapIn">
+    <wsdl:part name="parameters" element="tns:AddCaseFileParticipants" />
+  </wsdl:message>
+  <wsdl:message name="AddCaseFileParticipantsSoapOut">
+    <wsdl:part name="parameters" element="tns:AddCaseFileParticipantsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCaseFileAdditionalCaseWorkersSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCaseFileAdditionalCaseWorkers" />
+  </wsdl:message>
+  <wsdl:message name="GetCaseFileAdditionalCaseWorkersSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCaseFileAdditionalCaseWorkersResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddCaseFileAdditionalCaseWorkersSoapIn">
+    <wsdl:part name="parameters" element="tns:AddCaseFileAdditionalCaseWorkers" />
+  </wsdl:message>
+  <wsdl:message name="AddCaseFileAdditionalCaseWorkersSoapOut">
+    <wsdl:part name="parameters" element="tns:AddCaseFileAdditionalCaseWorkersResponse" />
+  </wsdl:message>
+  <wsdl:message name="RemoveCaseFileAdditionalCaseWorkersSoapIn">
+    <wsdl:part name="parameters" element="tns:RemoveCaseFileAdditionalCaseWorkers" />
+  </wsdl:message>
+  <wsdl:message name="RemoveCaseFileAdditionalCaseWorkersSoapOut">
+    <wsdl:part name="parameters" element="tns:RemoveCaseFileAdditionalCaseWorkersResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddCasePermisionSoapIn">
+    <wsdl:part name="parameters" element="tns:AddCasePermision" />
+  </wsdl:message>
+  <wsdl:message name="AddCasePermisionSoapOut">
+    <wsdl:part name="parameters" element="tns:AddCasePermisionResponse" />
+  </wsdl:message>
+  <wsdl:message name="RemoveCasePermisionSoapIn">
+    <wsdl:part name="parameters" element="tns:RemoveCasePermision" />
+  </wsdl:message>
+  <wsdl:message name="RemoveCasePermisionSoapOut">
+    <wsdl:part name="parameters" element="tns:RemoveCasePermisionResponse" />
+  </wsdl:message>
+  <wsdl:message name="eDocServiceForGISSoapIn">
+    <wsdl:part name="parameters" element="tns:eDocServiceForGIS" />
+  </wsdl:message>
+  <wsdl:message name="eDocServiceForGISSoapOut">
+    <wsdl:part name="parameters" element="tns:eDocServiceForGISResponse" />
+  </wsdl:message>
+  <wsdl:message name="DisplayOnGISSoapIn">
+    <wsdl:part name="parameters" element="tns:DisplayOnGIS" />
+  </wsdl:message>
+  <wsdl:message name="DisplayOnGISSoapOut">
+    <wsdl:part name="parameters" element="tns:DisplayOnGISResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetItemListSoapIn">
+    <wsdl:part name="parameters" element="tns:GetItemList" />
+  </wsdl:message>
+  <wsdl:message name="GetItemListSoapOut">
+    <wsdl:part name="parameters" element="tns:GetItemListResponse" />
+  </wsdl:message>
+  <wsdl:message name="SearchContactSoapIn">
+    <wsdl:part name="parameters" element="tns:SearchContact" />
+  </wsdl:message>
+  <wsdl:message name="SearchContactSoapOut">
+    <wsdl:part name="parameters" element="tns:SearchContactResponse" />
+  </wsdl:message>
+  <wsdl:portType name="eDocSoap">
+    <wsdl:operation name="GetSystemInfo">
+      <wsdl:input message="tns:GetSystemInfoSoapIn" />
+      <wsdl:output message="tns:GetSystemInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchDocument">
+      <wsdl:input message="tns:SearchDocumentSoapIn" />
+      <wsdl:output message="tns:SearchDocumentSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDocumentList">
+      <wsdl:input message="tns:GetDocumentListSoapIn" />
+      <wsdl:output message="tns:GetDocumentListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetWorkReport">
+      <wsdl:input message="tns:GetWorkReportSoapIn" />
+      <wsdl:output message="tns:GetWorkReportSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDocumentAttachmentList">
+      <wsdl:input message="tns:GetDocumentAttachmentListSoapIn" />
+      <wsdl:output message="tns:GetDocumentAttachmentListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateDocumentAndDocumentVersion">
+      <wsdl:input message="tns:CreateDocumentAndDocumentVersionSoapIn" />
+      <wsdl:output message="tns:CreateDocumentAndDocumentVersionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateDocument">
+      <wsdl:input message="tns:UpdateDocumentSoapIn" />
+      <wsdl:output message="tns:UpdateDocumentSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateDocumentVersion">
+      <wsdl:input message="tns:CreateDocumentVersionSoapIn" />
+      <wsdl:output message="tns:CreateDocumentVersionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDocumentVersion">
+      <wsdl:input message="tns:GetDocumentVersionSoapIn" />
+      <wsdl:output message="tns:GetDocumentVersionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckoutDocumentVersion">
+      <wsdl:input message="tns:CheckoutDocumentVersionSoapIn" />
+      <wsdl:output message="tns:CheckoutDocumentVersionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckinDocumentVersion">
+      <wsdl:input message="tns:CheckinDocumentVersionSoapIn" />
+      <wsdl:output message="tns:CheckinDocumentVersionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UndoCheckoutDocumentVersion">
+      <wsdl:input message="tns:UndoCheckoutDocumentVersionSoapIn" />
+      <wsdl:output message="tns:UndoCheckoutDocumentVersionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateCaseFile">
+      <wsdl:input message="tns:CreateCaseFileSoapIn" />
+      <wsdl:output message="tns:CreateCaseFileSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCaseFile">
+      <wsdl:input message="tns:UpdateCaseFileSoapIn" />
+      <wsdl:output message="tns:UpdateCaseFileSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FileDocument">
+      <wsdl:input message="tns:FileDocumentSoapIn" />
+      <wsdl:output message="tns:FileDocumentSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchCaseFile">
+      <wsdl:input message="tns:SearchCaseFileSoapIn" />
+      <wsdl:output message="tns:SearchCaseFileSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchNewCaseFilesAndCaseFilesWithNewDocuments">
+      <wsdl:input message="tns:SearchNewCaseFilesAndCaseFilesWithNewDocumentsSoapIn" />
+      <wsdl:output message="tns:SearchNewCaseFilesAndCaseFilesWithNewDocumentsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddCaseFileParticipants">
+      <wsdl:input message="tns:AddCaseFileParticipantsSoapIn" />
+      <wsdl:output message="tns:AddCaseFileParticipantsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCaseFileAdditionalCaseWorkers">
+      <wsdl:input message="tns:GetCaseFileAdditionalCaseWorkersSoapIn" />
+      <wsdl:output message="tns:GetCaseFileAdditionalCaseWorkersSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddCaseFileAdditionalCaseWorkers">
+      <wsdl:input message="tns:AddCaseFileAdditionalCaseWorkersSoapIn" />
+      <wsdl:output message="tns:AddCaseFileAdditionalCaseWorkersSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveCaseFileAdditionalCaseWorkers">
+      <wsdl:input message="tns:RemoveCaseFileAdditionalCaseWorkersSoapIn" />
+      <wsdl:output message="tns:RemoveCaseFileAdditionalCaseWorkersSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddCasePermision">
+      <wsdl:input message="tns:AddCasePermisionSoapIn" />
+      <wsdl:output message="tns:AddCasePermisionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveCasePermision">
+      <wsdl:input message="tns:RemoveCasePermisionSoapIn" />
+      <wsdl:output message="tns:RemoveCasePermisionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="eDocServiceForGIS">
+      <wsdl:input message="tns:eDocServiceForGISSoapIn" />
+      <wsdl:output message="tns:eDocServiceForGISSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DisplayOnGIS">
+      <wsdl:input message="tns:DisplayOnGISSoapIn" />
+      <wsdl:output message="tns:DisplayOnGISSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetItemList">
+      <wsdl:input message="tns:GetItemListSoapIn" />
+      <wsdl:output message="tns:GetItemListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchContact">
+      <wsdl:input message="tns:SearchContactSoapIn" />
+      <wsdl:output message="tns:SearchContactSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="eDocSoap" type="tns:eDocSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetSystemInfo">
+      <soap:operation soapAction="http://tempuri.org/GetSystemInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchDocument">
+      <soap:operation soapAction="http://tempuri.org/SearchDocument" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDocumentList">
+      <soap:operation soapAction="http://tempuri.org/GetDocumentList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetWorkReport">
+      <soap:operation soapAction="http://tempuri.org/GetWorkReport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDocumentAttachmentList">
+      <soap:operation soapAction="http://tempuri.org/GetDocumentAttachmentList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateDocumentAndDocumentVersion">
+      <soap:operation soapAction="http://tempuri.org/CreateDocumentAndDocumentVersion" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateDocument">
+      <soap:operation soapAction="http://tempuri.org/UpdateDocument" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateDocumentVersion">
+      <soap:operation soapAction="http://tempuri.org/CreateDocumentVersion" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDocumentVersion">
+      <soap:operation soapAction="http://tempuri.org/GetDocumentVersion" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckoutDocumentVersion">
+      <soap:operation soapAction="http://tempuri.org/CheckoutDocumentVersion" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckinDocumentVersion">
+      <soap:operation soapAction="http://tempuri.org/CheckinDocumentVersion" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UndoCheckoutDocumentVersion">
+      <soap:operation soapAction="http://tempuri.org/UndoCheckoutDocumentVersion" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateCaseFile">
+      <soap:operation soapAction="http://tempuri.org/CreateCaseFile" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCaseFile">
+      <soap:operation soapAction="http://tempuri.org/UpdateCaseFile" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FileDocument">
+      <soap:operation soapAction="http://tempuri.org/FileDocument" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchCaseFile">
+      <soap:operation soapAction="http://tempuri.org/SearchCaseFile" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchNewCaseFilesAndCaseFilesWithNewDocuments">
+      <soap:operation soapAction="http://tempuri.org/SearchNewCaseFilesAndCaseFilesWithNewDocuments" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddCaseFileParticipants">
+      <soap:operation soapAction="http://tempuri.org/AddCaseFileParticipants" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCaseFileAdditionalCaseWorkers">
+      <soap:operation soapAction="http://tempuri.org/GetCaseFileAdditionalCaseWorkers" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddCaseFileAdditionalCaseWorkers">
+      <soap:operation soapAction="http://tempuri.org/AddCaseFileAdditionalCaseWorkers" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveCaseFileAdditionalCaseWorkers">
+      <soap:operation soapAction="http://tempuri.org/RemoveCaseFileAdditionalCaseWorkers" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddCasePermision">
+      <soap:operation soapAction="http://tempuri.org/AddCasePermision" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveCasePermision">
+      <soap:operation soapAction="http://tempuri.org/RemoveCasePermision" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="eDocServiceForGIS">
+      <soap:operation soapAction="http://tempuri.org/eDocServiceForGIS" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DisplayOnGIS">
+      <soap:operation soapAction="http://tempuri.org/DisplayOnGIS" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetItemList">
+      <soap:operation soapAction="http://tempuri.org/GetItemList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchContact">
+      <soap:operation soapAction="http://tempuri.org/SearchContact" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="eDocSoap12" type="tns:eDocSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetSystemInfo">
+      <soap12:operation soapAction="http://tempuri.org/GetSystemInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchDocument">
+      <soap12:operation soapAction="http://tempuri.org/SearchDocument" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDocumentList">
+      <soap12:operation soapAction="http://tempuri.org/GetDocumentList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetWorkReport">
+      <soap12:operation soapAction="http://tempuri.org/GetWorkReport" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDocumentAttachmentList">
+      <soap12:operation soapAction="http://tempuri.org/GetDocumentAttachmentList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateDocumentAndDocumentVersion">
+      <soap12:operation soapAction="http://tempuri.org/CreateDocumentAndDocumentVersion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateDocument">
+      <soap12:operation soapAction="http://tempuri.org/UpdateDocument" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateDocumentVersion">
+      <soap12:operation soapAction="http://tempuri.org/CreateDocumentVersion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDocumentVersion">
+      <soap12:operation soapAction="http://tempuri.org/GetDocumentVersion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckoutDocumentVersion">
+      <soap12:operation soapAction="http://tempuri.org/CheckoutDocumentVersion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckinDocumentVersion">
+      <soap12:operation soapAction="http://tempuri.org/CheckinDocumentVersion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UndoCheckoutDocumentVersion">
+      <soap12:operation soapAction="http://tempuri.org/UndoCheckoutDocumentVersion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateCaseFile">
+      <soap12:operation soapAction="http://tempuri.org/CreateCaseFile" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCaseFile">
+      <soap12:operation soapAction="http://tempuri.org/UpdateCaseFile" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FileDocument">
+      <soap12:operation soapAction="http://tempuri.org/FileDocument" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchCaseFile">
+      <soap12:operation soapAction="http://tempuri.org/SearchCaseFile" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchNewCaseFilesAndCaseFilesWithNewDocuments">
+      <soap12:operation soapAction="http://tempuri.org/SearchNewCaseFilesAndCaseFilesWithNewDocuments" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddCaseFileParticipants">
+      <soap12:operation soapAction="http://tempuri.org/AddCaseFileParticipants" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCaseFileAdditionalCaseWorkers">
+      <soap12:operation soapAction="http://tempuri.org/GetCaseFileAdditionalCaseWorkers" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddCaseFileAdditionalCaseWorkers">
+      <soap12:operation soapAction="http://tempuri.org/AddCaseFileAdditionalCaseWorkers" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveCaseFileAdditionalCaseWorkers">
+      <soap12:operation soapAction="http://tempuri.org/RemoveCaseFileAdditionalCaseWorkers" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddCasePermision">
+      <soap12:operation soapAction="http://tempuri.org/AddCasePermision" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveCasePermision">
+      <soap12:operation soapAction="http://tempuri.org/RemoveCasePermision" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="eDocServiceForGIS">
+      <soap12:operation soapAction="http://tempuri.org/eDocServiceForGIS" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DisplayOnGIS">
+      <soap12:operation soapAction="http://tempuri.org/DisplayOnGIS" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetItemList">
+      <soap12:operation soapAction="http://tempuri.org/GetItemList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchContact">
+      <soap12:operation soapAction="http://tempuri.org/SearchContact" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="eDoc">
+    <wsdl:port name="eDocSoap" binding="tns:eDocSoap">
+      <soap:address location="http://edoctest:8090/edocdotnetapi/edoc.asmx" />
+    </wsdl:port>
+    <wsdl:port name="eDocSoap12" binding="tns:eDocSoap12">
+      <soap12:address location="http://edoctest:8090/edocdotnetapi/edoc.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

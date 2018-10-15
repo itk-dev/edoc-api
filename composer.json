@@ -1,6 +1,7 @@
 {
-    "name": "itk-dev/edoc",
+    "name": "itk-dev/edoc-api",
     "type": "project",
+    "homepage": "https://github.com/itk-dev/edoc-api",
     "license": "MIT",
     "authors": [
         {
@@ -9,14 +10,34 @@
         }
     ],
     "require": {
-        "php": "^7.0"
-    },
-    "autoload": {
-        "psr-0": {
-            "ItkDev\\": "src/"
-        }
+        "php": "^7.0",
+        "ext-curl": "*"
     },
     "require-dev": {
+        "friendsofphp/php-cs-fixer": "^2.13",
         "phpunit/phpunit": "^6.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "ItkDev\\Edoc\\": "src/"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "process-timeout": 0
+    },
+    "scripts": {
+        "check-coding-standards/php-cs-fixer": [
+            "php -n vendor/bin/php-cs-fixer --config=.php_cs.dist fix --dry-run"
+        ],
+        "check-coding-standards": [
+            "@check-coding-standards/php-cs-fixer"
+        ],
+        "apply-coding-standards/php-cs-fixer": [
+            "php -n vendor/bin/php-cs-fixer --config=.php_cs.dist fix"
+        ],
+        "apply-coding-standards": [
+            "@apply-coding-standards/php-cs-fixer"
+        ]
     }
 }

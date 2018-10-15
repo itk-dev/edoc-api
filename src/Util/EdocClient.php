@@ -1,19 +1,29 @@
 <?php
 
-namespace ItkDev\Edoc;
+/*
+ * This file is part of itk-dev/edoc-api.
+ *
+ * (c) 2018 ITK Development
+ *
+ * This source file is subject to the MIT license.
+ */
+
+namespace ItkDev\Edoc\Util;
 
 // @see https://github.com/WsdlToPhp/PackageGenerator/issues/57#issuecomment-222619148
-class NTLMSoapClient extends \SoapClient
+class EdocClient extends \SoapClient
 {
     private $username;
     private $password;
 
     private $lastRequestHeaders;
 
-    public function authenticate($username, $password)
+    public function __construct($wsdl, array $options = [])
     {
-        $this->username = $username;
-        $this->password = $password;
+        // Accessing the wsdl requires authentication, so we user a local wsdl.
+        parent::__construct(__DIR__.'/wsdl/edoc.asmx.wsdl', $options);
+        $this->username = $options['username'] ?? null;
+        $this->password = $options['password'] ?? null;
     }
 
     public function __doRequest($request, $location, $action, $version, $one_way = 0)
@@ -42,6 +52,6 @@ class NTLMSoapClient extends \SoapClient
 
     public function __getLastRequestHeaders()
     {
-        return implode("\n", $this->lastRequestHeaders) . '\n';
+        return implode("\n", $this->lastRequestHeaders).'\n';
     }
 }
