@@ -14,6 +14,9 @@ class XmlHelper
 {
     public static function format($xml)
     {
+        if ($xml instanceof \SimpleXMLElement) {
+            $xml = $xml->asXML();
+        }
         $dom = new \DOMDocument('1.0');
         $dom->preserveWhiteSpace = false;
         $dom->formatOutput = true;
@@ -23,13 +26,16 @@ class XmlHelper
     }
 
     /**
-     * @param \SimpleXMLElement $xml
-     * @param mixed             $keepNamespacePrefixes
+     * @param \SimpleXMLElement|string $xml
+     * @param mixed                    $keepNamespacePrefixes
      *
      * @return array
      */
-    public static function xml2array(\SimpleXMLElement $xml, $keepNamespacePrefixes = false)
+    public static function xml2array($xml, $keepNamespacePrefixes = false)
     {
+        if (\is_string($xml)) {
+            $xml = new \SimpleXMLElement($xml);
+        }
         $data = [];
         $namespaces = ['' => null] + $xml->getNamespaces(true);
         foreach ($namespaces as $prefix => $url) {

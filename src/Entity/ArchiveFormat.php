@@ -12,14 +12,14 @@ namespace ItkDev\Edoc\Entity;
 
 class ArchiveFormat extends Entity
 {
-    public $code;
-    public $fileExtension;
-    public $mimetype;
+    public $Code;
+    public $FileExtension;
+    public $Mimetype;
 
     protected function build(array $data)
     {
-        $this->code = $data['Code'];
-        $this->fileExtension = $data['FileExtension'];
-        $this->mimetype = $data['Mimetype'];
+        $this->Code = $data['Code'];
+        $this->FileExtension = $data['FileExtension'];
+        $this->Mimetype = $data['Mimetype'];
     }
 }

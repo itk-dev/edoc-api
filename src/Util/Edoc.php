@@ -37,6 +37,9 @@ class Edoc
      */
     private $client;
 
+    /**
+     * @var string
+     */
     private $userIdentifier;
 
     public function __construct(EdocClient $client, string $userIdentifier)
@@ -47,24 +50,39 @@ class Edoc
 
     public function getProjects()
     {
-        header('Content-type: text/plain');
-        echo var_export(null, true);
-        die(__FILE__.':'.__LINE__.':'.__METHOD__);
+        return $this->getItemList(ItemListType::PROJECT);
     }
 
     public function getArchiveFormats()
     {
-        $result = $this->getItemList(ObjectGroup::ARCHIVE_FORMAT);
+        $result = $this->getItemList(ItemListType::ARCHIVE_FORMAT);
 
         return $this->construct(ArchiveFormat::class, $result);
     }
 
-    public function getItemList($documentType)
+    public function getAttachments(array $criteria)
+    {
+        $xml = '<?xml version="1.0" encoding="UTF-8"?><Root xmlns:edoc="'.self::NS_EDOC.'"/>';
+        $document = XmlHelper::array2xml([
+            'UserIdentifier' => $this->userIdentifier,
+            'SearchCriterias' => $criteria,
+        ], $xml);
+
+        $result = $this->invoke('GetDocumentAttachmentList', $document);
+
+        if (!isset($result->GetDocumentAttachmentListResult)) {
+            throw new EdocException('Error getting attachments');
+        }
+
+        throw new \Exception(__METHOD__.' not implemented');
+    }
+
+    public function getItemList($type)
     {
         $document = $this->buildRequestDocument(
             [
-            'ObjectGroup' => $documentType,
-        ],
+                'ObjectGroup' => $type,
+            ],
             [
                 'ns' => [
                     self::EDOC => 'http://www.fujitsu.dk/esdh/xml/schemas/2007/01/14/',
@@ -79,10 +97,9 @@ class Edoc
         }
 
         $document = new \SimpleXmlElement($result->GetItemListResult, 0, false, self::NS_EDOCLIST);
-
         $data = [];
         foreach ($document->xpath('/Root/edoclist:*/edoclist:*') as $el) {
-            $pattern = '/^'.\preg_quote($documentType, '/').'/';
+            $pattern = '/^'.\preg_quote($type, '/').'/';
             $item = [];
             foreach ($el->children(self::EDOCLIST, true) as $value) {
                 $item[preg_replace($pattern, '', $value->getName())] = (string) $value;
@@ -93,11 +110,11 @@ class Edoc
         return $data;
     }
 
-    public function getDocumentList(array $case)
+    public function getDocumentList(CaseFile $case)
     {
         $document = $this->buildRequestDocument([
             'SearchCriterias' => [
-                'CaseFileIdentifier' => $case['CaseFileIdentifier'],
+                'CaseFileIdentifier' => $case->CaseFileIdentifier,
             ],
         ]);
 
@@ -124,63 +141,92 @@ class Edoc
         return $result;
     }
 
-    public function createDocument(string $caseFileIdentifier, array $parameters)
+    /**
+     * Create a document.
+     *
+     * @param CaseFile $case
+     * @param array    $data
+     *
+     * @throws EdocException
+     *
+     * @return Document
+     */
+    public function createDocument(CaseFile $case, array $data)
     {
-        $caseManagerReference = '538046'; // "Mikkel Ricky"
-        $organisationReference = '500131'; // "MBK-ITK"
+        $xml = '<?xml version="1.0" encoding="UTF-8"?><Root xmlns:fesd="'.self::NS_FESD.'" xmlns:edoc="'.self::NS_EDOC.'"/>';
+        $document = XmlHelper::array2xml([
+            'fesd:CaseFileIdentifier' => $case->CaseFileIdentifier,
+            'edoc:Document' => [
+                'fesd:UserIdentifier' => $this->userIdentifier,
+                // 'fesd:DocumentTypeReference>118</fesd:DocumentTypeReference>
+                'fesd:TitleText' => $data['TitleText'],
+                'fesd:DocumentTypeReference' => $data['DocumentTypeReference'],
+                // 'fesd:ToDocumentCategory' => 87,
+                // 'fesd:DocumentDate>2009-11-01</fesd:DocumentDate>
+                // 'fesd:LoanDate>2009-11-03</fesd:LoanDate>
+                // 'fesd:CaseManagerReference>'.$caseManagerReference.'</fesd:CaseManagerReference>
+                // 'edoc:OrganisationReference>'.$organisationReference.'</edoc:OrganisationReference>
+                // 'edoc:Summary>Dette dokument er blevet oprettet via API</edoc:Summary>
+                // 'edoc:CheckCode01>0</edoc:CheckCode01>
 
-        $document = new \SimpleXmlElement('<?xml version="1.0" encoding="UTF-8"?>
-<Root xmlns:fesd="http://rep.oio.dk/fesd.dk/xml/schemas/2005/04/20/"
-      xmlns:edoc="http://www.fujitsu.dk/esdh/xml/schemas/2007/01/05/" >
-	<fesd:CaseFileIdentifier>'.$caseFileIdentifier.'</fesd:CaseFileIdentifier>
-	<edoc:Document>
-		<fesd:UserIdentifier>www.fujitsu.dk/esdh/bruger/xyz</fesd:UserIdentifier>
-		<fesd:DocumentTypeReference>118</fesd:DocumentTypeReference>
-		<fesd:TitleText>Dokument oprettet fra API</fesd:TitleText>
-		<fesd:DocumentDate>2009-11-01</fesd:DocumentDate>
-		<fesd:LoanDate>2009-11-03</fesd:LoanDate>
-		<fesd:CaseManagerReference>'.$caseManagerReference.'</fesd:CaseManagerReference>
-		<edoc:OrganisationReference>'.$organisationReference.'</edoc:OrganisationReference>
-		<edoc:Summary>Dette dokument er blevet oprettet via API</edoc:Summary>
-		<edoc:CheckCode01>0</edoc:CheckCode01>
-		<fesd:DocumentStatusCode>12</fesd:DocumentStatusCode>
-		<edoc:DocumentVersion>
-			<fesd:ArchiveFormatCode>13</fesd:ArchiveFormatCode>
-			<fesd:DocumentContents>U2ltcGxlIHRleHQgZG9jdW1lbnQ=</fesd:DocumentContents>
-		</edoc:DocumentVersion>
-	</edoc:Document>
-</Root>');
+                // getItemList DocumentStatusCode
+                'fesd:DocumentStatusCode' => 12,
+                'edoc:DocumentVersion' => [
+                    // getItemList ArchiveFormat
+                    'fesd:ArchiveFormatCode' => 13, // "text/plain"
+                    'fesd:DocumentContents' => \base64_encode(uniqid(__METHOD__)),
+                ],
+            ],
+        ], $xml);
 
         $result = $this->invoke('CreateDocumentAndDocumentVersion', $document);
 
-        header('Content-type: text/plain');
-        echo var_export([
-            $this->getLastRequest(),
-            $result,
-        ], true);
-        die(__FILE__.':'.__LINE__.':'.__METHOD__);
+        if (!isset($result->CreateDocumentAndDocumentVersionResult)) {
+            throw new EdocException('Error creating document');
+        }
 
-        $xml = new \SimpleXmlElement($result->CreateDocumentAndDocumentVersionResult);
+        return new Document(XmlHelper::xml2array($result->CreateDocumentAndDocumentVersionResult));
+    }
 
-        $domxml = new \DOMDocument('1.0');
-        $domxml->preserveWhiteSpace = false;
-        $domxml->formatOutput = true;
-        // @var $xml SimpleXMLElement
-        $domxml->loadXML($xml->asXML());
-        echo $domxml->saveXML();
+    /**
+     * Create a case file.
+     *
+     * @param array $data
+     *
+     * @throws EdocException
+     *
+     * @return CaseFile
+     */
+    public function createCaseFile(array $data)
+    {
+        $xml = '<?xml version="1.0" encoding="UTF-8"?><Root xmlns:fesd="'.self::NS_FESD.'" xmlns:edoc="'.self::NS_EDOC.'"/>';
+        $document = XmlHelper::array2xml([
+            'edoc:Case' => [
+                'fesd:UserIdentifier' => $this->userIdentifier,
+                'fesd:CaseFileTypeCode' => $data['CaseFileTypeCode'],
+                'fesd:TitleText' => $data['TitleText'],
+                'fesd:CaseFileManagerReference' => $data['CaseFileManagerReference'],
+                'edoc:Project' => $data['Project'],
+                'edoc:HasPersonrelatedInfo' => $data['HasPersonrelatedInfo'] ? 300001 : 300002,
+                'edoc:HandlingCodeId' => $data['HandlingCodeId'],
+                'edoc:PrimaryCode' => $data['PrimaryCode'],
+            ],
+        ], $xml);
 
-        header('Content-type: text/plain');
-        echo var_export($xml->asXML(), true);
-        die(__FILE__.':'.__LINE__.':'.__METHOD__);
+        $result = $this->invoke('CreateCaseFile', $document);
 
-        return $result;
+        if (!isset($result->CreateCaseFileResult)) {
+            throw new EdocException('Error creating case file');
+        }
+
+        return new CaseFile(XmlHelper::xml2array($result->CreateCaseFileResult));
     }
 
     /**
      * @param array      $criteria
      * @param null|array $fields
      *
-     * @return array|CaseFile[]
+     * @return CaseFile[]
      */
     public function searchCaseFile(array $criteria, array $fields = null)
     {
@@ -194,14 +240,16 @@ class Edoc
         $result = $this->invoke('SearchCaseFile', $document);
 
         if (!isset($result->SearchCaseFileResult)) {
-            return null;
+            return [];
         }
 
         $document = new \SimpleXmlElement($result->SearchCaseFileResult, 0, false, self::NS_EDOC);
 
         $data = [];
-        foreach ($document->CaseFilesSearchResult->CaseFileSearchResult as $el) {
-            $data[] = new CaseFile(XmlHelper::xml2array($el));
+        if (isset($document->CaseFilesSearchResult->CaseFileSearchResult)) {
+            foreach ($document->CaseFilesSearchResult->CaseFileSearchResult as $el) {
+                $data[] = new CaseFile(XmlHelper::xml2array($el));
+            }
         }
 
         return $data;

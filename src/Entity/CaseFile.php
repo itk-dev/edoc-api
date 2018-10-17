@@ -12,4 +12,10 @@ namespace ItkDev\Edoc\Entity;
 
 class CaseFile extends Entity
 {
+    public $CaseFileIdentifier;
+
+    protected function build(array $data)
+    {
+        $this->CaseFileIdentifier = $data['CaseFileIdentifier'];
+    }
 }

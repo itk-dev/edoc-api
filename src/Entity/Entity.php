@@ -10,14 +10,14 @@
 
 namespace ItkDev\Edoc\Entity;
 
-abstract class Entity
+abstract class Entity implements \ArrayAccess, \JsonSerializable
 {
     /**
      * The data.
      *
      * @var array
      */
-    protected $data;
+    private $data;
 
     public function __construct(array $data)
     {
@@ -32,6 +32,31 @@ abstract class Entity
         }
 
         throw new \Exception('Undefined property: '.$name);
+    }
+
+    public function offsetExists($offset)
+    {
+        return array_key_exists($offset, $this->data);
+    }
+
+    public function offsetGet($offset)
+    {
+        return $this->data[$offset];
+    }
+
+    public function offsetSet($offset, $value)
+    {
+        throw new \RuntimeException(static::class.' is immutable');
+    }
+
+    public function offsetUnset($offset)
+    {
+        throw new \RuntimeException(static::class.' is immutable');
+    }
+
+    public function jsonSerialize()
+    {
+        return $this->data;
     }
 
     protected function build(array $data)
