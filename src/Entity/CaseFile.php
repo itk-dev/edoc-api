@@ -12,6 +12,7 @@ namespace ItkDev\Edoc\Entity;
 
 class CaseFile extends Entity
 {
+    /** @var string */
     public $CaseFileIdentifier;
 
     protected function build(array $data)

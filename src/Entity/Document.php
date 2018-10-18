@@ -12,4 +12,11 @@ namespace ItkDev\Edoc\Entity;
 
 class Document extends Entity
 {
+    /** @var string */
+    public $DocumentIdentifier;
+
+    protected function build(array $data)
+    {
+        $this->DocumentIdentifier = $data['DocumentIdentifier'];
+    }
 }

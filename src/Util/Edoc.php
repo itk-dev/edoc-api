@@ -142,53 +142,6 @@ class Edoc
     }
 
     /**
-     * Create a document.
-     *
-     * @param CaseFile $case
-     * @param array    $data
-     *
-     * @throws EdocException
-     *
-     * @return Document
-     */
-    public function createDocument(CaseFile $case, array $data)
-    {
-        $xml = '<?xml version="1.0" encoding="UTF-8"?><Root xmlns:fesd="'.self::NS_FESD.'" xmlns:edoc="'.self::NS_EDOC.'"/>';
-        $document = XmlHelper::array2xml([
-            'fesd:CaseFileIdentifier' => $case->CaseFileIdentifier,
-            'edoc:Document' => [
-                'fesd:UserIdentifier' => $this->userIdentifier,
-                // 'fesd:DocumentTypeReference>118</fesd:DocumentTypeReference>
-                'fesd:TitleText' => $data['TitleText'],
-                'fesd:DocumentTypeReference' => $data['DocumentTypeReference'],
-                // 'fesd:ToDocumentCategory' => 87,
-                // 'fesd:DocumentDate>2009-11-01</fesd:DocumentDate>
-                // 'fesd:LoanDate>2009-11-03</fesd:LoanDate>
-                // 'fesd:CaseManagerReference>'.$caseManagerReference.'</fesd:CaseManagerReference>
-                // 'edoc:OrganisationReference>'.$organisationReference.'</edoc:OrganisationReference>
-                // 'edoc:Summary>Dette dokument er blevet oprettet via API</edoc:Summary>
-                // 'edoc:CheckCode01>0</edoc:CheckCode01>
-
-                // getItemList DocumentStatusCode
-                'fesd:DocumentStatusCode' => 12,
-                'edoc:DocumentVersion' => [
-                    // getItemList ArchiveFormat
-                    'fesd:ArchiveFormatCode' => 13, // "text/plain"
-                    'fesd:DocumentContents' => \base64_encode(uniqid(__METHOD__)),
-                ],
-            ],
-        ], $xml);
-
-        $result = $this->invoke('CreateDocumentAndDocumentVersion', $document);
-
-        if (!isset($result->CreateDocumentAndDocumentVersionResult)) {
-            throw new EdocException('Error creating document');
-        }
-
-        return new Document(XmlHelper::xml2array($result->CreateDocumentAndDocumentVersionResult));
-    }
-
-    /**
      * Create a case file.
      *
      * @param array $data
@@ -210,6 +163,7 @@ class Edoc
                 'edoc:HasPersonrelatedInfo' => $data['HasPersonrelatedInfo'] ? 300001 : 300002,
                 'edoc:HandlingCodeId' => $data['HandlingCodeId'],
                 'edoc:PrimaryCode' => $data['PrimaryCode'],
+                'fesd:Summary' => $data['Summary'] ?? 'Created via api',
             ],
         ], $xml);
 
@@ -220,6 +174,35 @@ class Edoc
         }
 
         return new CaseFile(XmlHelper::xml2array($result->CreateCaseFileResult));
+    }
+
+    /**
+     * Update a document.
+     *
+     * @param CaseFile|string $case
+     * @param array           $data
+     *
+     * @throws EdocException
+     *
+     * @return bool
+     */
+    public function updateCaseFile($case, array $data)
+    {
+        $identifier = $case instanceof CaseFile ? $case->CaseFileIdentifier : $case;
+        $document = $this->buildDocument([
+            'edoc:Case' => array_merge([
+                'fesd:UserIdentifier' => $this->userIdentifier,
+                'fesd:CaseFileIdentifier' => $identifier,
+            ], $this->addNs($data)),
+        ]);
+
+        $result = $this->invoke('UpdateCaseFile', $document);
+
+        if (!isset($result->UpdateCaseFileResult)) {
+            throw new EdocException('Error updating document.');
+        }
+
+        return true;
     }
 
     /**
@@ -267,6 +250,63 @@ class Edoc
         ]);
 
         return 1 === \count($caseFiles) ? reset($caseFiles) : null;
+    }
+
+    /**
+     * Create a document.
+     *
+     * @param CaseFile $case
+     * @param array    $data
+     *
+     * @throws EdocException
+     *
+     * @return Document
+     */
+    public function createDocument(CaseFile $case, array $data)
+    {
+        $xml = '<?xml version="1.0" encoding="UTF-8"?><Root xmlns:fesd="'.self::NS_FESD.'" xmlns:edoc="'.self::NS_EDOC.'"/>';
+        $document = XmlHelper::array2xml([
+            'fesd:CaseFileIdentifier' => $case->CaseFileIdentifier,
+            'edoc:Document' => array_merge([
+                'fesd:UserIdentifier' => $this->userIdentifier,
+            ], $this->addNs($data)),
+        ], $xml);
+
+        $result = $this->invoke('CreateDocumentAndDocumentVersion', $document);
+
+        if (!isset($result->CreateDocumentAndDocumentVersionResult)) {
+            throw new EdocException('Error creating document');
+        }
+
+        return new Document(XmlHelper::xml2array($result->CreateDocumentAndDocumentVersionResult));
+    }
+
+    /**
+     * Update a document.
+     *
+     * @param Document|string $document
+     * @param array           $data
+     *
+     * @throws EdocException
+     *
+     * @return bool
+     */
+    public function updateDocument(Document $document, array $data)
+    {
+        $identifier = $document instanceof Document ? $document->DocumentIdentifier : $document;
+        $document = $this->buildDocument([
+            'edoc:Document' => array_merge([
+                'fesd:UserIdentifier' => $this->userIdentifier,
+                'fesd:DocumentIdentifier' => $identifier,
+            ], $this->addNs($data)),
+        ]);
+
+        $result = $this->invoke('UpdateDocument', $document);
+        if (!isset($result->UpdateDocumentResult)) {
+            throw new EdocException('Error updating document.');
+        }
+
+        return true;
     }
 
     /**
@@ -320,6 +360,47 @@ class Edoc
         return $this->client->__getLastResponse();
     }
 
+    /**
+     * Add namespace prefix to a key.
+     *
+     * @param $key
+     *
+     * @return string
+     */
+    private function getNsKey($key)
+    {
+        // Check if key already has namespace.
+        if (preg_match('/^[a-z]+:/', $key)) {
+            return $key;
+        }
+
+        switch ($key) {
+            case 'Summary':
+                return self::EDOC.':'.$key;
+            case 'TitleText':
+                return self::FESD.':'.$key;
+        }
+
+        return $key;
+    }
+
+    /**
+     * Add namespace (alias) to array keys.
+     *
+     * @param array $data
+     *
+     * @return array
+     */
+    private function addNs(array $data)
+    {
+        $nsData = [];
+        foreach ($data as $key => $value) {
+            $nsData[$this->getNsKey($key)] = $value;
+        }
+
+        return $nsData;
+    }
+
     private function construct($class, array $items)
     {
         return array_map(function (array $data) use ($class) {
@@ -332,6 +413,24 @@ class Edoc
         return $this->client->{$method}([
             'XmlDocument' => $document->asXML(),
         ]);
+    }
+
+    /**
+     * Build a request document.
+     *
+     * @param array $data
+     *
+     * @return \SimpleXMLElement
+     */
+    private function buildDocument(array $data)
+    {
+        $xml = '<?xml version="1.0" encoding="UTF-8"?>';
+        $xml .= '<Root';
+        $xml .= ' xmlns:'.self::EDOC.'="'.self::NS_EDOC.'"';
+        $xml .= ' xmlns:'.self::FESD.'="'.self::NS_FESD.'"';
+        $xml .= '/>';
+
+        return XmlHelper::array2xml($data, $xml);
     }
 
     /**
