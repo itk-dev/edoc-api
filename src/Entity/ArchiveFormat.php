@@ -12,6 +12,8 @@ namespace ItkDev\Edoc\Entity;
 
 class ArchiveFormat extends Entity
 {
+    public const ZIP = 18;
+
     public $Code;
     public $FileExtension;
     public $Mimetype;

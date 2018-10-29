@@ -262,7 +262,7 @@ class Edoc
      *
      * @return Document
      */
-    public function createDocument(CaseFile $case, array $data)
+    public function createDocumentAndDocumentVersion(CaseFile $case, array $data)
     {
         $xml = '<?xml version="1.0" encoding="UTF-8"?><Root xmlns:fesd="'.self::NS_FESD.'" xmlns:edoc="'.self::NS_EDOC.'"/>';
         $document = XmlHelper::array2xml([
@@ -281,6 +281,25 @@ class Edoc
         return new Document(XmlHelper::xml2array($result->CreateDocumentAndDocumentVersionResult));
     }
 
+    public function createDocumentVersion(Document $document, array $data)
+    {
+        $identifier = $document->DocumentIdentifier;
+        $request = $this->buildDocument([
+            'edoc:DocumentVersion' => array_merge([
+                'fesd:UserIdentifier' => $this->userIdentifier,
+                'fesd:DocumentVersionIdentifier' => $document->DocumentVersionIdentifier,
+                'edoc:FileVariantCode' => 0, // "Produktionsformat"
+            ], $this->addNs($data)),
+        ]);
+
+        $result = $this->invoke('CreateDocumentVersion', $request);
+        if (!isset($result->CreateDocumentVersionResult) || !empty($result->CreateDocumentVersionResult)) {
+            throw new EdocException('Error creating document version');
+        }
+
+        return true;
+    }
+
     /**
      * Update a document.
      *
@@ -293,15 +312,15 @@ class Edoc
      */
     public function updateDocument(Document $document, array $data)
     {
-        $identifier = $document instanceof Document ? $document->DocumentIdentifier : $document;
-        $document = $this->buildDocument([
+        $identifier = $document->DocumentIdentifier;
+        $request = $this->buildDocument([
             'edoc:Document' => array_merge([
                 'fesd:UserIdentifier' => $this->userIdentifier,
                 'fesd:DocumentIdentifier' => $identifier,
             ], $this->addNs($data)),
         ]);
 
-        $result = $this->invoke('UpdateDocument', $document);
+        $result = $this->invoke('UpdateDocument', $request);
         if (!isset($result->UpdateDocumentResult)) {
             throw new EdocException('Error updating document.');
         }
@@ -360,6 +379,57 @@ class Edoc
         return $this->client->__getLastResponse();
     }
 
+    public function debug()
+    {
+        $this->updateDocument(
+            '7cfcb29f-6541-449f-b06b-ba3be2ad9871',
+            [
+                'Summary' => 'Test document'.date('c'),
+            ]
+        );
+
+        header('Content-type: text/plain');
+        echo var_export(null, true);
+        die(__FILE__.':'.__LINE__.':'.__METHOD__);
+
+        $document = $this->buildDocument([
+            'edoc:DocumentVersion' => [
+                'fesd:UserIdentifier' => $this->userIdentifier,
+                'fesd:DocumentVersionIdentifier' => '0879f537-4a1d-4aef-8d14-e1c3928bb59b',
+                'fesd:ArchiveFormatCode' => 13,
+                'edoc:FileVariantCode' => 2,
+                'fesd:DocumentContents' => base64_encode('Hep-hey!'),
+                'edoc:Comment' => 'Updated at '.date('c'),
+            ],
+        ]);
+
+        echo XmlHelper::format($document);
+
+        $result = $this->invoke('CreateDocumentVersion', $document);
+
+        echo var_export(isset($result->CreateDocumentVersionResult) && '' === $result->CreateDocumentVersionResult, true);
+        die(__FILE__.':'.__LINE__.':'.__METHOD__);
+
+        return isset($result->CreateDocumentVersionResult) && '' === $result->CreateDocumentVersionResult;
+        echo var_export($result->CreateDocumentVersionResult, true);
+        die(__FILE__.':'.__LINE__.':'.__METHOD__);
+        echo XmlHelper::format(reset($result));
+        die(__FILE__.':'.__LINE__.':'.__METHOD__);
+
+        return;
+        $document = $this->buildDocument([
+            self::FESD.':UserIdentifier' => $this->userIdentifier,
+            'fesd:UserIdentifier' => $this->userIdentifier,
+        ]);
+
+        echo XmlHelper::format($document);
+
+        $result = $this->invoke('FileDocument', $document);
+
+        echo XmlHelper::format(reset($result));
+        die(__FILE__.':'.__LINE__.':'.__METHOD__);
+    }
+
     /**
      * Add namespace prefix to a key.
      *
@@ -376,8 +446,11 @@ class Edoc
 
         switch ($key) {
             case 'Summary':
+            case 'DocumentVersion':
                 return self::EDOC.':'.$key;
             case 'TitleText':
+            case 'ArchiveFormatCode':
+            case 'DocumentContents':
                 return self::FESD.':'.$key;
         }
 
@@ -395,7 +468,7 @@ class Edoc
     {
         $nsData = [];
         foreach ($data as $key => $value) {
-            $nsData[$this->getNsKey($key)] = $value;
+            $nsData[$this->getNsKey($key)] = \is_array($value) ? $this->addNs($value) : $value;
         }
 
         return $nsData;

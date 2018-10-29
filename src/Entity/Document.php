@@ -15,8 +15,12 @@ class Document extends Entity
     /** @var string */
     public $DocumentIdentifier;
 
+    /** @var string */
+    public $DocumentVersionIdentifier;
+
     protected function build(array $data)
     {
         $this->DocumentIdentifier = $data['DocumentIdentifier'];
+        $this->DocumentVersionIdentifier = $data['DocumentVersionIdentifier'];
     }
 }
