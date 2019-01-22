@@ -278,7 +278,18 @@ class Edoc
             throw new EdocException('Error creating document');
         }
 
-        return new Document(XmlHelper::xml2array($result->CreateDocumentAndDocumentVersionResult));
+        $document = new Document(XmlHelper::xml2array($result->CreateDocumentAndDocumentVersionResult));
+
+        // For some reason, the result of "CreateDocumentAndDocumentVersionResult" does not include
+        // "DocumentVersionIdentifier", so we get it by performing a search (!).
+        if (null === $document->DocumentVersionIdentifier) {
+            $result = $this->searchDocument(['DocumentIdentifier' => $document->DocumentIdentifier]);
+            if (1 === \count($result)) {
+                $document = $result[0];
+            }
+        }
+
+        return $document;
     }
 
     public function createDocumentVersion(Document $document, array $data)

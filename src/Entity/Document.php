@@ -21,6 +21,6 @@ class Document extends Entity
     protected function build(array $data)
     {
         $this->DocumentIdentifier = $data['DocumentIdentifier'];
-        $this->DocumentVersionIdentifier = $data['DocumentVersionIdentifier'];
+        $this->DocumentVersionIdentifier = $data['DocumentVersionIdentifier'] ?? null;
     }
 }
