@@ -59,6 +59,11 @@ abstract class Entity implements \ArrayAccess, \JsonSerializable
         return $this->data;
     }
 
+    public function getData()
+    {
+        return $this->data;
+    }
+
     protected function build(array $data)
     {
     }
