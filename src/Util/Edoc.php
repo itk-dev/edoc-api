@@ -100,12 +100,7 @@ class Edoc
         $document = new \SimpleXmlElement($result->GetItemListResult, 0, false, self::NS_EDOCLIST);
         $data = [];
         foreach ($document->xpath('/Root/edoclist:*/edoclist:*') as $el) {
-            $pattern = '/^'.\preg_quote($type, '/').'/';
-            $item = [];
-            foreach ($el->children(self::EDOCLIST, true) as $value) {
-                $item[preg_replace($pattern, '', $value->getName())] = (string) $value;
-            }
-            $data[] = $item;
+            $data[] = XmlHelper::xml2array($el);
         }
 
         return $data;
