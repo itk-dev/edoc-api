@@ -77,11 +77,12 @@ class Edoc
         throw new \Exception(__METHOD__.' not implemented');
     }
 
-    public function getItemList($type)
+    public function getItemList($type, array $criteria = [])
     {
         $document = $this->buildRequestDocument(
             [
                 'ObjectGroup' => $type,
+                'SearchCriterias' => $criteria,
             ],
             [
                 'ns' => [
