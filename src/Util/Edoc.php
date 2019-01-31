@@ -148,20 +148,11 @@ class Edoc
      */
     public function createCaseFile(array $data)
     {
-        $xml = '<?xml version="1.0" encoding="UTF-8"?><Root xmlns:fesd="'.self::NS_FESD.'" xmlns:edoc="'.self::NS_EDOC.'"/>';
-        $document = XmlHelper::array2xml([
-            'edoc:Case' => [
+        $document = $this->buildDocument([
+            'edoc:Case' => array_merge([
                 'fesd:UserIdentifier' => $this->userIdentifier,
-                'fesd:CaseFileTypeCode' => $data['CaseFileTypeCode'],
-                'fesd:TitleText' => $data['TitleText'],
-                'fesd:CaseFileManagerReference' => $data['CaseFileManagerReference'],
-                'edoc:Project' => $data['Project'],
-                'edoc:HasPersonrelatedInfo' => $data['HasPersonrelatedInfo'] ? 300001 : 300002,
-                'edoc:HandlingCodeId' => $data['HandlingCodeId'],
-                'edoc:PrimaryCode' => $data['PrimaryCode'],
-                'fesd:Summary' => $data['Summary'] ?? 'Created via api',
-            ],
-        ], $xml);
+            ], $this->addNs($data)),
+        ]);
 
         $result = $this->invoke('CreateCaseFile', $document);
 
@@ -452,12 +443,23 @@ class Edoc
         }
 
         switch ($key) {
-            case 'Summary':
+            case 'CaseWorkerAccountName':
             case 'DocumentVersion':
+            case 'HandlingCodeId':
+            case 'HasPersonrelatedInfo':
+            case 'OrganisationReference':
+            case 'PrimaryCode':
+            case 'Project':
+            case 'Summary':
                 return self::EDOC.':'.$key;
-            case 'TitleText':
             case 'ArchiveFormatCode':
+            case 'CaseFileManagerReference':
+            case 'CaseFileTypeCode':
             case 'DocumentContents':
+            case 'Summary':
+            case 'TitleText':
+            case 'TitleText':
+            case 'UserIdentifier':
                 return self::FESD.':'.$key;
         }
 
