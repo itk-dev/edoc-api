@@ -12,4 +12,13 @@ namespace ItkDev\Edoc\Util;
 
 class EdocException extends \Exception
 {
+    /** @var object */
+    private $data;
+
+    public function setData($data)
+    {
+        $this->data = $data;
+
+        return $this;
+    }
 }

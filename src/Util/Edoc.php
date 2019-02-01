@@ -495,9 +495,22 @@ class Edoc
 
     private function invoke(string $method, \SimpleXMLElement $document)
     {
-        return $this->client->{$method}([
+        $result = $this->client->{$method}([
             'XmlDocument' => $document->asXML(),
         ]);
+
+        if (!isset($result->{$method.'Result'})) {
+            throw (new EdocException('Error calling eDoc api method'.$method))
+                ->setData($result);
+        }
+
+        $data = XmlHelper::xml2array($result->{$method.'Result'});
+        if (isset($data['ErrorCode'])) {
+            throw (new EdocException($data['ErrorCode'].': '.($data['ErrorDescriptionText'] ?? '')))
+                ->setData($data);
+        }
+
+        return $result;
     }
 
     /**
