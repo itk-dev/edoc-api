@@ -160,7 +160,10 @@ class Edoc
             throw new EdocException('Error creating case file');
         }
 
-        return new CaseFile(XmlHelper::xml2array($result->CreateCaseFileResult));
+        $caseFile = new CaseFile(XmlHelper::xml2array($result->CreateCaseFileResult));
+
+        // The result of "CreateCaseFile" has very little information. (Try to) Convert it to a full CaseFile object.
+        return $this->getCaseFile($caseFile->CaseFileIdentifier) ?? $caseFile;
     }
 
     /**
