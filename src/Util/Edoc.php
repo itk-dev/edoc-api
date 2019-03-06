@@ -330,6 +330,18 @@ class Edoc
     }
 
     /**
+     * Get document by identifier.
+     *
+     * @param $identifier
+     * @return Document|null
+     */
+    public function getDocument($identifier) {
+        $result = $this->searchDocument(['fesd:DocumentIdentifier' => $identifier]);
+
+        return 1 === \count($result) ? $result[0] : null;
+    }
+
+    /**
      * @param array      $criteria
      * @param null|array $fields
      *
