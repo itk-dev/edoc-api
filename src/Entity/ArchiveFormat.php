@@ -12,6 +12,7 @@ namespace ItkDev\Edoc\Entity;
 
 class ArchiveFormat extends Entity
 {
+    public const PDF = 12;
     public const ZIP = 18;
 
     public $Code;
