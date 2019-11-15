@@ -333,9 +333,11 @@ class Edoc
      * Get document by identifier.
      *
      * @param $identifier
-     * @return Document|null
+     *
+     * @return null|Document
      */
-    public function getDocument($identifier) {
+    public function getDocument($identifier)
+    {
         $result = $this->searchDocument(['fesd:DocumentIdentifier' => $identifier]);
 
         return 1 === \count($result) ? $result[0] : null;
@@ -471,6 +473,8 @@ class Edoc
             case 'CaseFileManagerReference':
             case 'CaseFileTypeCode':
             case 'DocumentContents':
+            case 'DocumentStatusCode':
+            case 'DocumentTypeReference':
             case 'Summary':
             case 'TitleText':
             case 'TitleText':

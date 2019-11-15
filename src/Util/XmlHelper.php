@@ -33,6 +33,9 @@ class XmlHelper
      */
     public static function xml2array($xml, $keepNamespacePrefixes = false)
     {
+        if (\is_string($xml) && empty($xml)) {
+            return [];
+        }
         if (\is_string($xml)) {
             $xml = new \SimpleXMLElement($xml);
         }
