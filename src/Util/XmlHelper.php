@@ -71,7 +71,6 @@ class XmlHelper
     /**
      * Convert array to xml.
      *
-     * @param array  $data
      * @param string $root       Root element name or xml markup
      * @param null   $namespaces
      *
@@ -125,6 +124,6 @@ class XmlHelper
 
     private static function isSequential(array $arr)
     {
-        return $arr === [] || array_keys($arr) === range(0, \count($arr) - 1);
+        return [] === $arr || array_keys($arr) === range(0, \count($arr) - 1);
     }
 }

@@ -10,6 +10,9 @@
 
 namespace ItkDev\Edoc\Entity;
 
+use ReflectionClass;
+use RuntimeException;
+
 class ArchiveFormat extends Entity
 {
     public const UF = 1;
@@ -111,6 +114,19 @@ class ArchiveFormat extends Entity
     public $Code;
     public $FileExtension;
     public $Mimetype;
+
+    public static function getArchiveFormat(string $filename)
+    {
+        $ext = pathinfo(strtoupper($filename), PATHINFO_EXTENSION);
+        $class = new ReflectionClass(self::class);
+        $constant = $class->getConstant($ext);
+
+        if (false === $constant) {
+            throw new RuntimeException(sprintf('Cannot get archive format for file %s', $filename));
+        }
+
+        return $constant;
+    }
 
     protected function build(array $data)
     {

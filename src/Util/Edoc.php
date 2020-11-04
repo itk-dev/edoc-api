@@ -33,7 +33,7 @@ class Edoc
     const NS_FESD = self::NS[self::FESD];
 
     /**
-     * @var EdocClientInterface
+     * @var EdocClient
      */
     private $client;
 
@@ -140,8 +140,6 @@ class Edoc
     /**
      * Create a case file.
      *
-     * @param array $data
-     *
      * @throws EdocException
      *
      * @return CaseFile
@@ -170,7 +168,6 @@ class Edoc
      * Update a document.
      *
      * @param CaseFile|string $case
-     * @param array           $data
      *
      * @throws EdocException
      *
@@ -189,16 +186,13 @@ class Edoc
         $result = $this->invoke('UpdateCaseFile', $document);
 
         if (!isset($result->UpdateCaseFileResult)) {
-            throw new EdocException('Error updating document.');
+            throw new EdocException('Error updating case file.');
         }
 
         return true;
     }
 
     /**
-     * @param array      $criteria
-     * @param null|array $fields
-     *
      * @return CaseFile[]
      */
     public function searchCaseFile(array $criteria, array $fields = null)
@@ -229,8 +223,6 @@ class Edoc
     }
 
     /**
-     * @param string $identifier
-     *
      * @return null|CaseFile
      */
     public function getCaseFile(string $identifier)
@@ -244,9 +236,6 @@ class Edoc
 
     /**
      * Create a document.
-     *
-     * @param CaseFile $case
-     * @param array    $data
      *
      * @throws EdocException
      *
@@ -305,7 +294,6 @@ class Edoc
      * Update a document.
      *
      * @param Document|string $document
-     * @param array           $data
      *
      * @throws EdocException
      *
@@ -344,9 +332,6 @@ class Edoc
     }
 
     /**
-     * @param array      $criteria
-     * @param null|array $fields
-     *
      * @return array|Document[]
      */
     public function searchDocument(array $criteria, array $fields = null)
@@ -488,8 +473,6 @@ class Edoc
     /**
      * Add namespace (alias) to array keys.
      *
-     * @param array $data
-     *
      * @return array
      */
     private function addNs(array $data)
@@ -516,14 +499,12 @@ class Edoc
         ]);
 
         if (!isset($result->{$method.'Result'})) {
-            throw (new EdocException('Error calling eDoc api method'.$method))
-                ->setData($result);
+            throw (new EdocException('Error calling eDoc api method'.$method))->setData($result);
         }
 
         $data = XmlHelper::xml2array($result->{$method.'Result'});
         if (isset($data['ErrorCode'])) {
-            throw (new EdocException($data['ErrorCode'].': '.($data['ErrorDescriptionText'] ?? '')))
-                ->setData($data);
+            throw (new EdocException($data['ErrorCode'].': '.($data['ErrorDescriptionText'] ?? '')))->setData($data);
         }
 
         return $result;
@@ -531,8 +512,6 @@ class Edoc
 
     /**
      * Build a request document.
-     *
-     * @param array $data
      *
      * @return \SimpleXMLElement
      */
@@ -548,7 +527,6 @@ class Edoc
     }
 
     /**
-     * @param array       $data
      * @param null|string $userIdentifier
      *
      * @return \SimpleXmlElement
