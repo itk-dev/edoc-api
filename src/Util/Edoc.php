@@ -455,6 +455,7 @@ class Edoc
             case 'Summary':
                 return self::EDOC.':'.$key;
             case 'ArchiveFormatCode':
+            case 'DocumentDate':
             case 'CaseFileManagerReference':
             case 'CaseFileTypeCode':
             case 'DocumentContents':
