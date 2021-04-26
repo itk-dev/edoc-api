@@ -117,7 +117,7 @@ class ArchiveFormat extends Entity
 
     public static function getArchiveFormat(string $filename)
     {
-        $ext = pathinfo(strtoupper($filename), PATHINFO_EXTENSION);
+        $ext = pathinfo(strtoupper($filename), \PATHINFO_EXTENSION);
         $class = new ReflectionClass(self::class);
         $constant = $class->getConstant($ext);
 
@@ -130,8 +130,8 @@ class ArchiveFormat extends Entity
 
     protected function build(array $data)
     {
-        $this->Code = $data['Code'];
-        $this->FileExtension = $data['FileExtension'];
-        $this->Mimetype = $data['Mimetype'];
+        $this->Code = $data['ArchiveFormatCode'] ?? $data['Code'];
+        $this->FileExtension = $data['ArchiveFormatFileExtension'] ?? $data['FileExtension'];
+        $this->Mimetype = $data['ArchiveFormatMimetype'] ?? $data['Mimetype'];
     }
 }

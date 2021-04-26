@@ -13,6 +13,7 @@ namespace ItkDev\Edoc\Util;
 use ItkDev\Edoc\Entity\ArchiveFormat;
 use ItkDev\Edoc\Entity\CaseFile;
 use ItkDev\Edoc\Entity\Document;
+use ItkDev\Edoc\Entity\DocumentVersion;
 
 class Edoc
 {
@@ -116,7 +117,17 @@ class Edoc
 
         $result = $this->invoke('GetDocumentList', $document);
 
-        return $result;
+        if (!isset($result->GetDocumentListResult)) {
+            return null;
+        }
+
+        $document = new \SimpleXmlElement($result->GetDocumentListResult, 0, false, self::NS_EDOCLIST);
+        $data = [];
+        foreach ($document->xpath('/Root/edoc:*/edoc:*') as $el) {
+            $data[] = new Document(XmlHelper::xml2array($el));
+        }
+
+        return $data;
     }
 
     public function getDocumentVersion(string $identifier)
@@ -125,16 +136,18 @@ class Edoc
             'DocumentVersionIdentifier' => $identifier,
         ]);
 
-        $document = new \SimpleXmlElement('<?xml version="1.0" encoding="UTF-8"?>
-<Root xmlns:edoc="http://www.fujitsu.dk/esdh/xml/schemas/2007/01/05/" >
-	<edoc:DocumentVersionIdentifier>200076-1</edoc:DocumentVersionIdentifier>
-	<edoc:UserIdentifier>www.fujitsu.dk/abc</edoc:UserIdentifier>
-</Root>
-');
-
         $result = $this->invoke('GetDocumentVersion', $document);
 
-        return $result;
+        if (!isset($result->GetDocumentVersionResult)) {
+            return null;
+        }
+
+        $document = new \SimpleXmlElement($result->GetDocumentVersionResult, 0, false, self::NS_EDOCLIST);
+        foreach ($document->xpath('/Root/edoc:*') as $el) {
+            return new DocumentVersion(XmlHelper::xml2array($el));
+        }
+
+        return null;
     }
 
     /**
@@ -390,7 +403,7 @@ class Edoc
 
         header('Content-type: text/plain');
         echo var_export(null, true);
-        die(__FILE__.':'.__LINE__.':'.__METHOD__);
+        exit(__FILE__.':'.__LINE__.':'.__METHOD__);
 
         $document = $this->buildDocument([
             'edoc:DocumentVersion' => [
@@ -408,13 +421,13 @@ class Edoc
         $result = $this->invoke('CreateDocumentVersion', $document);
 
         echo var_export(isset($result->CreateDocumentVersionResult) && '' === $result->CreateDocumentVersionResult, true);
-        die(__FILE__.':'.__LINE__.':'.__METHOD__);
+        exit(__FILE__.':'.__LINE__.':'.__METHOD__);
 
         return isset($result->CreateDocumentVersionResult) && '' === $result->CreateDocumentVersionResult;
         echo var_export($result->CreateDocumentVersionResult, true);
-        die(__FILE__.':'.__LINE__.':'.__METHOD__);
+        exit(__FILE__.':'.__LINE__.':'.__METHOD__);
         echo XmlHelper::format(reset($result));
-        die(__FILE__.':'.__LINE__.':'.__METHOD__);
+        exit(__FILE__.':'.__LINE__.':'.__METHOD__);
 
         return;
         $document = $this->buildDocument([
@@ -427,7 +440,7 @@ class Edoc
         $result = $this->invoke('FileDocument', $document);
 
         echo XmlHelper::format(reset($result));
-        die(__FILE__.':'.__LINE__.':'.__METHOD__);
+        exit(__FILE__.':'.__LINE__.':'.__METHOD__);
     }
 
     /**
