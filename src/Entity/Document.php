@@ -10,6 +10,11 @@
 
 namespace ItkDev\Edoc\Entity;
 
+/**
+ * Class Document.
+ *
+ * @property string $DocumentNumber
+ */
 class Document extends Entity
 {
     /** @var string */

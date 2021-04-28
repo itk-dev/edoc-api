@@ -61,23 +61,6 @@ class Edoc
         return $this->construct(ArchiveFormat::class, $result);
     }
 
-    public function getAttachments(array $criteria)
-    {
-        $xml = '<?xml version="1.0" encoding="UTF-8"?><Root xmlns:edoc="'.self::NS_EDOC.'"/>';
-        $document = XmlHelper::array2xml([
-            'UserIdentifier' => $this->userIdentifier,
-            'SearchCriterias' => $criteria,
-        ], $xml);
-
-        $result = $this->invoke('GetDocumentAttachmentList', $document);
-
-        if (!isset($result->GetDocumentAttachmentListResult)) {
-            throw new EdocException('Error getting attachments');
-        }
-
-        throw new \Exception(__METHOD__.' not implemented');
-    }
-
     public function getItemList($type, array $criteria = [])
     {
         $document = $this->buildRequestDocument(
@@ -107,6 +90,9 @@ class Edoc
         return $data;
     }
 
+    /**
+     * @return Document[]
+     */
     public function getDocumentList(CaseFile $case)
     {
         $document = $this->buildRequestDocument([
@@ -148,6 +134,33 @@ class Edoc
         }
 
         return null;
+    }
+
+    /**
+     * @return null|Document[]
+     */
+    public function getDocumentAttachmentList(Document $document)
+    {
+        $document = $this->buildRequestDocument([
+            'SearchCriterias' => [
+                'DocumentIdentifier' => $document->DocumentIdentifier,
+            ],
+        ]);
+
+        $result = $this->invoke('GetDocumentAttachmentList', $document);
+
+        if (!isset($result->GetDocumentAttachmentListResult)) {
+            return null;
+        }
+
+        $document = new \SimpleXmlElement($result->GetDocumentAttachmentListResult, 0, false, self::NS_EDOCLIST);
+
+        $data = [];
+        foreach ($document->xpath('/Root/edoc:*/edoc:*') as $el) {
+            $data[] = new Document(XmlHelper::xml2array($el));
+        }
+
+        return $data;
     }
 
     /**
@@ -353,7 +366,9 @@ class Edoc
         $crit = $document->addChild('DocumentSearch', null, self::NS_EDOC)
             ->addChild('SearchCriterias', null, self::NS_EDOC);
         foreach ($criteria as $name => $value) {
-            $crit->addChild($name, $value, self::NS_FESD);
+            // @fixme Use getNSKey (or similar) for this.
+            $ns = \in_array($name, ['DocumentNumber'], true) ? self::NS_EDOC : self::NS_FESD;
+            $crit->addChild($name, $value, $ns);
         }
 
         $result = $this->invoke('SearchDocument', $document);
@@ -459,6 +474,7 @@ class Edoc
 
         switch ($key) {
             case 'CaseWorkerAccountName':
+            case 'DocumentNumber':
             case 'DocumentVersion':
             case 'HandlingCodeId':
             case 'HasPersonrelatedInfo':

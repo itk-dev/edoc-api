@@ -21,12 +21,12 @@ class DocumentVersion extends Entity
     /** @var int */
     public $ArchiveFormatCode;
 
-    /**
-     * Document content (base64 encoded).
-     *
-     * @var string
-     */
-    public $DocumentContents;
+    public function getData($includeContents = false)
+    {
+        return array_filter(parent::getData(), static function ($key) use ($includeContents) {
+            return $includeContents || 'DocumentContents' !== $key;
+        }, \ARRAY_FILTER_USE_KEY);
+    }
 
     public function getBinaryContents()
     {
@@ -38,6 +38,5 @@ class DocumentVersion extends Entity
         $this->DocumentVersionNumber = (int) $data['DocumentVersionNumber'];
         $this->DocumentVersionIdentifier = $data['DocumentVersionIdentifier'] ?? null;
         $this->ArchiveFormatCode = $data['ArchiveFormatCode'] ?? null;
-        $this->DocumentContents = $data['DocumentContents'];
     }
 }
